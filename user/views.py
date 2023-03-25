@@ -4,6 +4,8 @@ from .models import User
 from .forms import AdminRegisterForm,UserRegisterForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
+from django.views.generic import ListView
+from expense.models import Expense
 
 class UserRegisterView(CreateView):
     model = User
@@ -20,7 +22,7 @@ class AdminRegisterView(CreateView):
 
 class UserLoginView(LoginView):
     template_name = 'user/login.html'
-    success_url = "expense/dashboard.html"
+    success_url = "user/dashboard.html"
     
 
     def get_redirect_url(self):
@@ -30,3 +32,14 @@ class UserLoginView(LoginView):
                 return '/'
             else:
                 return '/'
+
+class userDashboardView(ListView):            
+    
+    def get(self, request, *args, **kwargs):
+        expense = Expense.objects.all().values()
+        
+        return render(request, 'user/dashboard.html',{
+            'expenses':expense,
+        })
+
+    template_name = 'user/dashboard.html'

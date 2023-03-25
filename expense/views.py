@@ -11,13 +11,13 @@ class ExpenseCreateView(CreateView):
     form_class =ExpenseForm
     model = Expense
     template_name = 'expense/expensecreate.html'
-    success_url = '/expense/list'
+    success_url = '/expense/dashboard/'
 
 # @method_decorator(login_required(login_url='/expense/login'),name='dispatch')
 
 class ExpenseListView(ListView):
     model = Expense
-    template_name = 'expense/dashboard.html'
+    template_name = 'expense/expenselist.html'
     context_object_name = 'expenselist'
 
 
