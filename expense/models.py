@@ -71,14 +71,16 @@ paymentMethod = ('cash','Cash'),('cheque','Cheque'),('creditcard','CreditCard')
 status = ('cleared','Cleared'),('uncleared','UnCleared'),('void','Void')
 class Expense(models.Model):
     amount = models.IntegerField()
-    expdatetime = models.DateTimeField(auto_now_add=True)
+    expdate = models.DateField(auto_now_add=True)
+    exptime = models.TimeField(auto_now_add=True,null=True)
     payee = models.ForeignKey(Payee,on_delete=models.CASCADE)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     subcategory = models.ForeignKey(SubCategory,on_delete=models.CASCADE)
     paymentMethod = models.CharField(choices=paymentMethod,max_length=50) 
     status = models.CharField(choices=status,max_length=50)
     description = models.CharField(max_length=100)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     class Meta:
         db_table = 'expense'
     def __str__(self):
-        return self.expense
+        return str(self.category)

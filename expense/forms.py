@@ -7,3 +7,7 @@ class ExpenseForm(form.ModelForm):
         model = Expense
         fields = '__all__'
 
+class ChartForm(form.ModelForm):
+    class Meta:
+        model = Expense
+        fields = ('category',)
