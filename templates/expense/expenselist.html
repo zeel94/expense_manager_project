@@ -218,8 +218,7 @@
             <p class="card-description">
               Horizontal form layout
             </p> -->
-            <form class="forms-sample" method="POST">
-              {% csrf_token %}
+            <form class="forms-sample">            
 
               <div class="card-body">
                 <h4 class="card-title">List of Expenses</h4>
@@ -241,10 +240,10 @@
                       {% for i in expenselist %}
                       <col>
                       <td>
-                        <strong>{{i.category}}</strong>
+                        <strong>{{i.category_id__cname}}</strong>
                       </td>
                       <td>
-                        <strong>{{i.subcategory}}</strong>
+                        <strong>{{i.subcategory_id__scname}}</strong>
                       </td> 
                       <td> 
                         <strong>{{i.amount}}</strong>
@@ -254,7 +253,7 @@
                       </td>
                       <td>
                         <a href="{% url 'expensedelete' i.id %}">
-                        <button>Delete</button></a>
+                        <input type="button" value="Delete"></a>
                       </td>
         
                       {% endfor %}

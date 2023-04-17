@@ -12,27 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-# Create your views here.
-# class ExpenseCreateView(CreateView):
-#     form_class =ExpenseForm
-#     model = Expense
-#     template_name = 'expense/expensecreate.html'
-#     success_url = '/user/dashboard/'
-
-#     def form_valid(self, form):
-#         user = form.save()
-#         if user is not None:
-#             print(user,"User--------------")
-#             subject = "welcome to django"
-#             message = "hello django"
-#             email_from = settings.EMAIL_HOST_USER
-#             email = [user.email]
-#             recipient_list = email
-#             print(email," email ---------------------------------------------")
-#             res = send_mail(subject,message,email_from,recipient_list)
-#             print(res," mail info---------------------------------------------")
-#         return super(ExpenseCreateView, self.user).form_valid(form)
-    
+# Create your views here.    
 
 class ExpenseCreateView(LoginRequiredMixin, CreateView):
     form_class =ExpenseForm
@@ -41,10 +21,14 @@ class ExpenseCreateView(LoginRequiredMixin, CreateView):
     success_url = '/user/dashboard/'
 
     def form_valid(self, form):
+        return super().form_valid(form)
+
+
+    def form_valid(self, form):
         form.instance.user = self.request.user
         response = super().form_valid(form)
         subject = "Welcome to Mysite"
-        message = "Hello Guys! you just created your expense. Thank you for join us."
+        message = "Hello Guys! you just created your expense. Thank you for joining us."
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [self.request.user.email]        
         send_mail(subject, message, email_from, recipient_list)
@@ -55,10 +39,18 @@ class ExpenseCreateView(LoginRequiredMixin, CreateView):
 # @method_decorator(login_required(login_url='/expense/login'),name='dispatch')
 
 class ExpenseListView(ListView):
-    model = Expense
+   # model = Expense
     template_name = 'expense/expenselist.html'
     context_object_name = 'expenselist'
     ordering = ['-expdate']
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        expenselist1 =Expense.objects.filter(user=user).values()
+        expenselist = Expense.objects.filter(user=user).values('id','amount','category_id__cname','subcategory_id__scname','expdate')
+        print(expenselist1)
+        return render(request,'expense/expenselist.html',{'expenselist':expenselist})
+
     
 
 
@@ -68,7 +60,6 @@ class ExpenseDeleteView(DeleteView):
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
 
-    # template_name = 'expense/expensedelete.html'
     success_url = '/expense/list'
 
 
@@ -81,7 +72,7 @@ class ExpenseDeleteView(DeleteView):
 
 class ExpenseDetailView(DetailView):
     model = Expense
-    template_name = 'expense/expensedetail.html'
+    template_name = 'expense/chartjs.html'
     context_object_name = 'expensedetail'
 
     labels = []

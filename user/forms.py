@@ -39,7 +39,7 @@ class AdminRegisterForm(UserCreationForm):
 class UserForm(forms.ModelForm):
     class Meta:
         model = UserDetail
-        fields = ('user','picture','phone','age','professions')
+        fields = ('user','firstname','lastname','age','professions','budget','picture','email')
 
 
     @transaction.atomic
@@ -53,7 +53,7 @@ class UserForm(forms.ModelForm):
 class UserDetailForm(forms.ModelForm):
     class Meta:
         model = UserDetail
-        fields = ('user','picture','phone','age','professions')
+        fields = ('user','firstname','lastname','age','professions','budget')
 
 
     @transaction.atomic
