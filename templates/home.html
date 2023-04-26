@@ -52,6 +52,7 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li><a href="http://127.0.0.1:8000/user/login/">Login</a></li>
 
@@ -90,9 +91,9 @@
               Have a problem with budget, don't worry about it just manage you daily,monthly or yearly expenses with us. we track your expense and show it in graphical format.
             </p>
             <ul>
-              <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
-              <li><i class="ri-check-double-line"></i> Duis aute irure dolor in reprehenderit in voluptate velit</li>
-              <li><i class="ri-check-double-line"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat</li>
+              <li><i class="ri-check-double-line"></i> To know where the money is going;</li>
+              <li><i class="ri-check-double-line"></i> To save money for pre-defined expenses;</li>
+              <li><i class="ri-check-double-line"></i> To spend only on priorities;</li>
             </ul>
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
@@ -107,6 +108,56 @@
 
       </div>
     </section><!-- End About Section -->
+
+
+        <!-- ======= Services Section ======= -->
+        <section id="services" class="services">
+          <div class="container">
+    
+            <div class="section-title">
+              <h2>Services</h2>
+              <h3>We do offer awesome <span>Services</span></h3>
+              <p>Expense manager app offer various services to help individuals and businesses track some of them are mentioned below;</p>
+            </div>
+    
+            <div class="row">
+              <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                <div class="icon-box">
+                  <div class="icon"><i class="bx bxl-dribbble"></i></div>
+                  <h4 class="title"><a href="">Expense tracking</a></h4>
+                  <p class="description">An expense manager can help you keep track of all your expenses, whether they are personal or business-related.</p>
+                </div>
+              </div>
+    
+              <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                <div class="icon-box">
+                  <div class="icon"><i class="bx bx-file"></i></div>
+                  <h4 class="title"><a href="">Budgeting</a></h4>
+                  <p class="description">An expense manager can help you create and stick to a budget by setting limits.</p>
+                </div>
+              </div>
+    
+              <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                <div class="icon-box">
+                  <div class="icon"><i class="bx bx-tachometer"></i></div>
+                  <h4 class="title"><a href="">Management</a></h4>
+                  <p class="description">An expense manager making it easier to keep track of your expenses and for tax purposes.</p>
+                </div>
+              </div>
+    
+              <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                <div class="icon-box">
+                  <div class="icon"><i class="bx bx-world"></i></div>
+                  <h4 class="title"><a href="">Overall</a></h4>
+                  <p class="description">An expense manager can be a valuable tool for anyone who wants to manage thier expenses.</p>
+                </div>
+              </div>
+    
+            </div>
+    
+          </div>
+        </section><!-- End Services Section -->
+    
 
 
     <!-- ======= Cta Section ======= -->
@@ -147,7 +198,7 @@
               <div class="email">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>expense@manager.com</p>
+                <p>zeelkayasth655@gmail.com</p>
               </div>
 
               <div class="phone">
@@ -162,7 +213,8 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form  action = "{% url 'contacts' %}" method="POST" role="form" enctype="multipart/form-data">
+              {% csrf_token %}
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
@@ -178,11 +230,11 @@
                 <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
               </div>
               <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+                <!-- <div class="loading">Loading</div>
+                <div class="sent-message">Your message has been sent. Thank you!</div> -->
               </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-danger btn-rounded">Send Message</button></div>
             </form>
 
           </div>
@@ -197,7 +249,55 @@
   <!-- ======= Footer ======= -->
   <footer id="footer">
 
-    
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>Expense Manager</h3>
+            <p>
+              23-vatva, <br>
+              Ahmedabad, Pin- 382440,<br>
+              India <br><br>
+              <strong>Phone:</strong> +91 9825528356<br>
+              <strong>Email:</strong> zeelkayasth655@gmail.com<br>
+            </p>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#hero">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#about">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#contact">Contact Us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="http://127.0.0.1:8000/user/login/">Login</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Expense tracking</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Budgeting</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Management</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Overall</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#hero">Get Started</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Join Our App</h4>
+            <p>Subscribe an expense manager app and join us to manage your budget.</p>
+            <form action="{% url 'subscribes'%}" method="POST">
+              {% csrf_token %}
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
     <div class="container d-md-flex py-4">
 

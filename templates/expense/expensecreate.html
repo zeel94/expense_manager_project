@@ -28,10 +28,11 @@
 
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row ">
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-        <a class="navbar-brand brand-logo" href="dashboard.html"><img src="{% static 'assets/images/logo.svg' %}" alt="logo"/></a>
-        <a class="navbar-brand brand-logo-mini" href="dashboard.html"><img src="{% static 'assets/images/logo-mini.svg' %}" alt="logo"/></a>
+        <!-- <a class="navbar-brand brand-logo" href="http://127.0.0.1:8000/user/dashboard/"><img src="{% static 'assets/images/logo.svg' %}" alt="logo"/></a> -->
+        <h5 style="color: aliceblue;">Expense_Manager</h5>
+        <!-- <a class="navbar-brand brand-logo-mini" href="http://127.0.0.1:8000/user/dashboard/"><img src="{% static 'assets/images/logo-mini.svg' %}" alt="logo"/></a> -->
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
@@ -55,7 +56,7 @@
                 <button type="button" class="btn btn-info font-weight-bold">+ Create New</button>
               </a>
             </li>
-          <li class="nav-item dropdown d-flex">
+          <!-- <li class="nav-item dropdown d-flex">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
               <i class="icon-air-play mx-0"></i>
             </a>
@@ -98,66 +99,56 @@
                 </div>
               </a>
             </div>
-          </li>
+          </li> -->
           <li class="nav-item dropdown d-flex mr-4 ">
             <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
               <i class="icon-cog"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
               <p class="mb-0 font-weight-normal float-left dropdown-header">Settings</p>
-              <a class="dropdown-item preview-item">               
+              <a class="dropdown-item preview-item" href="{% url 'userdetail' user.id %}">               
                   <i class="icon-head"></i> Profile
               </a>
-              <a class="dropdown-item preview-item">
+              <a class="dropdown-item preview-item" href="http://127.0.0.1:8000/user/logout/">
                   <i class="icon-inbox"></i> Logout
               </a>
             </div>
           </li>
-          <li class="nav-item dropdown mr-4 d-lg-flex d-none">
-            <a class="nav-link count-indicatord-flex align-item s-center justify-content-center" href="#">
-              <i class="icon-grid"></i>
-            </a>
-          </li>
-        </ul>
-        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+          </ul>
+        <!-- <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
           <span class="icon-menu"></span>
-        </button>
+        </button> -->
       </div>
     </nav> 
      <!-- partial -->
      <div class="container-fluid page-body-wrapper"> 
        <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
+
         <div class="user-profile">
           <div class="user-image">
-            <img src="{% static 'assets/images/faces/face28.png' %}">
+            {{user.picture}}
+            <!-- <img src="{% static 'assets/images/faces/face28.png' %}"> -->
           </div>
           <div class="user-name">
-              Edward Spencer
+            {{user.get_username}}
           </div>
           <div class="user-designation">
-              Developer
+            {{user.professions}}
           </div>
         </div>
         <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="http://127.0.0.1:8000">
+              <i class="icon-command menu-icon"></i>
+              <span class="menu-title">Home</span>
+            </a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="http://127.0.0.1:8000/user/dashboard/">
               <i class="icon-box menu-icon"></i>
               <span class="menu-title">Dashboard</span>
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-              <i class="icon-disc menu-icon"></i>
-              <span class="menu-title">UI Elements</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="ui-basic">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="{% static 'assets/pages/ui-features/buttons.html' %}">Buttons</a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% static 'assets/pages/ui-features/typography.html' %}">Typography</a></li>
-              </ul>
-            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://127.0.0.1:8000/expense/create/">
@@ -166,11 +157,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% static 'assets/pages/charts/chartjs.html' %}">
+            <!-- <a class="nav-link" href="http://127.0.0.1:8000/expense/chart/">
               <i class="icon-pie-graph menu-icon"></i>
               <span class="menu-title">Charts</span>
             </a>
-          </li>
+          </li> -->
+
           <li class="nav-item">
             <a class="nav-link" href="http://127.0.0.1:8000/expense/list/">
               <i class="icon-command menu-icon"></i>
@@ -178,12 +170,12 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% static 'assets/pages/icons/feather-icons.html' %}">
-              <i class="icon-help menu-icon"></i>
-              <span class="menu-title">Icons</span>
+            <a class="nav-link" href="{% url 'userdetail' user.id %}">
+              <i class="icon-head menu-icon"></i>
+              <span class="menu-title">Profile</span>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
               <i class="icon-head menu-icon"></i>
               <span class="menu-title">User Pages</span>
@@ -193,16 +185,16 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="http://127.0.0.1:8000/user/login/"> Login </a></li>
                 <li class="nav-item"> <a class="nav-link" href="http://127.0.0.1:8000/user/userregister/"> Register </a></li>
-                <li class="nav-item"> <a class="nav-link" href="{% static 'assets/pages/samples/lock-screen.html' %}"> Lockscreen </a></li>
+                <li class="nav-item"> <a class="nav-link" href="http://127.0.0.1:8000"> Home </a></li>
               </ul>
             </div>
-          </li>
-          <li class="nav-item">
+          </li> -->
+          <!-- <li class="nav-item">
             <a class="nav-link" href="docs/documentation.html">
               <i class="icon-book menu-icon"></i>
               <span class="menu-title">Documentation</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav> 
       <!-- partial -->
@@ -217,7 +209,8 @@
             <form method ="post">
               {% csrf_token %}
               {{form|crispy}}
-              <input type="submit" value="Submit" class="btn btn-success">
+              <input type="submit" class="btn btn-info" value="Submit" >
+              <!-- <button type="button" class="btn btn-info">Info</button> -->
               <button class="btn btn-light" fdprocessedid="dxoe6o">Cancel</button>
               
             </form>

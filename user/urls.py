@@ -1,3 +1,4 @@
+from django import views
 from django.contrib import admin
 from django.urls import path
 from .views import *
@@ -9,6 +10,7 @@ urlpatterns = [
     path('login/',UserLoginView.as_view(),name='login'),
     path('logout/',UserLogoutView.as_view(),name='logout'),
     path('dashboard/',userDashboardView.as_view(),name='user_dashboard'),
-    path('userform/',UserCreateView.as_view(),name='userform'),
-    path('userdetail/',UserDetailView.as_view(),name='userdetail')
+    path('userupdate/<int:pk>',UserUpdateView.as_view(),name='userupdate'),
+    path('userdetail/<int:pk>',UserDetailView.as_view(),name='userdetail'),
+
 ]

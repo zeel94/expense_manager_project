@@ -159,7 +159,7 @@
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
       datasets: [
         {
-          label: 'Sessions',
+          label: 'Groceries',
           data: [24000,83123,24000,36000,20000,39000,72000,44000,18000],
           backgroundColor: [
             '#3794fc','#3794fc','#3794fc','#3794fc','#3794fc','#3794fc','#3794fc','#3794fc',

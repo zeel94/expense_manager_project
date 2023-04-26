@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,29 +23,9 @@
   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
-  <script>
-    function searchFromProject(){
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("myInput");
-      filter = input.value.toUpperCase();
-      table = document.getElementById("myTable");
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }
-      }
-    }
-
-  </script>
 </head>
 <body>
+
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row ">
@@ -66,22 +46,7 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <!-- <form method="get" id="myForm">
-                <input style="border: none;" type="text" name="search-area" value="{{search_input}}" placeholder="Search Category">
-              </form>
-              <script>
-                const form = document.getElementById('myForm');
-                const input = form.querySelector('input[name="search"]');
-              
-                input.addEventListener('keydown', (event) => {
-                  if (event.key === 'Enter') {
-                    event.preventDefault();
-                    form.submit();
-                  }
-                });
-              </script> -->
-
-              <input type="text" class="form-control" placeholder="Search Expense.." onkeyup="searchFromProject()" aria-label="search" aria-describedby="search" id ="myInput">
+              <input type="text" class="form-control" placeholder="Search Projects.." aria-label="search" aria-describedby="search">
             </div>
           </li>
         </ul>
@@ -154,14 +119,11 @@
           <span class="icon-menu"></span>
         </button> -->
       </div>
-    </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper pt-0">
-      <!-- partial:partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </nav> 
+     <!-- partial -->
+     <div class="container-fluid page-body-wrapper"> 
+       <!-- partial:partials/_sidebar.html -->
+       <nav class="sidebar sidebar-offcanvas" id="sidebar">
 
         <div class="user-profile">
           <div class="user-image">
@@ -169,7 +131,7 @@
             <!-- <img src="{% static 'assets/images/faces/face28.png' %}"> -->
           </div>
           <div class="user-name">
-            {{user.get_username}}&nbsp;{{user.last_name}}
+            {{user.get_username}}
           </div>
           <div class="user-designation">
             {{user.professions}}
@@ -234,130 +196,166 @@
             </a>
           </li> -->
         </ul>
-      </nav>
+      </nav> 
       <!-- partial -->
+
+
       <div class="main-panel">
         <div class="content-wrapper">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  
           <div class="row">
-            <div class="col-sm-12 mb-4 mb-xl-0">
-              <h4 class="font-weight-bold text-dark">Hi, welcome {{user.get_username}}!</h4>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-              <!-- <p class="font-weight-normal mb-2 text-muted">APRIL 1, 2019</p> -->
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold" style="color: rgb(25, 25, 120);">Welcome, {{user.get_username}}</h3>
+    
+                  <style>
+                     @font-face { font-family: Nunito; src: url('static/assets/fonts/Nunito/Nunito-Regular.ttf'); }
+                  </style>
+                </div>
+                <div class="col-12 col-xl-4">
+                 <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+    
+                  </div>
+                 </div>
+                </div>
+              </div>
             </div>
           </div>
-          <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-          <link rel="stylesheet" href="{% static 'assets/css2/card.css' %}">
+    
+    
+    
+    
+    
+    
+        <div class="row">
           <div class="container">
-    <div class="row">
-        <div class="col-md-4 col-xl-3">
-            <div class="card bg-c-blue order-card">
-                <div class="card-block">
-                    <h6 class="m-b-20">Expenses</h6>
-                    <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>{{total}}</span></h2>
-                    <p class="m-b-0">Expenses<span class="f-right">{{total}}</span></p>
+            <div class="row gutters">
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="account-settings">
+                        <div class="user-profile">
+                            <div class="user-avatar">
+                                <img style="height: 200px;" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+                            </div>
+                            <br>
+                            <h5 class="user-name">{{user.username}}</h5>
+                            <h6 class="user-email">{{user.email}}</h6>
+                        </div>
+                        <div class="about">
+                            <!-- <h5>About</h5>
+                            <p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p> -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
-      <div class="col-md-4 col-xl-3">
-        <div class="card bg-c-green order-card">
-            <div class="card-block">
-                <h6 class="m-b-20">Current Budget</h6>
-                <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>{{income}}</span></h2>
-                <p class="m-b-0">Current Budget<span class="f-right">{{income}}</span></p>
             </div>
-        </div>
-    </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class="col-md-4 col-xl-3">
-          <div class="card bg-c-yellow order-card">
-              <div class="card-block">
-                  <h6 class="m-b-20">Budget</h6>
-                  <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>{{budget}}</span></h2>
-                  <p class="m-b-0">Budget<span class="f-right">{{budget}}</span></p>
-              </div>
-          </div>
-      </div>        
-        <!-- <div class="col-md-4 col-xl-3">
-            <div class="card bg-c-pink order-card">
-                <div class="card-block">
-                    <h6 class="m-b-20">Orders Received</h6>
-                    <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
-                    <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
+            
+            <div class="col-md-8">
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h4 class="d-flex align-items-center mb-3" style="color: #4B49AC;">
+                        Edit your profile
+                    </h4>
+                    
+                    <div class="row gutters">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <form method="POST">
+                                {% csrf_token %}
+                            <div class="form-group">
+                                <!-- <label for="fullName">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter full name"> -->
+                                {{form.username | as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <!-- <label for="eMail">Email</label>
+                                <input type="email" class="form-control" id="eMail" placeholder="Enter email ID"> -->
+                                {{form.first_name | as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <!-- <label for="phone">Phone</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Enter phone number"> -->
+                                {{form.last_name | as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <!-- <label for="website">Website URL</label>
+                                <input type="url" class="form-control" id="website" placeholder="Website url"> -->
+                                {{form.email | as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <!-- <label for="website">Website URL</label>
+                                <input type="url" class="form-control" id="website" placeholder="Website url"> -->
+                                {{form.budget | as_crispy_field}}
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <!-- <label for="website">Website URL</label>
+                                <input type="url" class="form-control" id="website" placeholder="Website url"> -->
+                                {{form.professions | as_crispy_field}}
+                            </div>
+                        </div>
+                        
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <!-- <label for="website">Website URL</label>
+                                <input type="url" class="form-control" id="website" placeholder="Website url"> -->
+                                {{form.age | as_crispy_field}}
+                            </div>
+                        </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <!-- <label for="website">Website URL</label>
+                                    <input type="url" class="form-control" id="website" placeholder="Website url"> -->
+                                    {{form.phone | as_crispy_field}}
+                                </div>    
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                              <div class="form-group">
+                                  <!-- <label for="website">Website URL</label>
+                                  <input type="url" class="form-control" id="website" placeholder="Website url"> -->
+                                  {{form.picture | as_crispy_field}}
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                <div class="row">
+                                  <div class="col-sm-12">
+                                    <input type="submit" class="btn btn-info " value="Submit">
+                                  </div>
+                                </div>
+                                
+                               </div>
+                    
+                </form>
+                  </div>
                 </div>
             </div>
-        </div> -->
-	</div>
-</div>
-
-</div>
-
-          <form class="forms-sample">            
-
-            <div class="card-body">
-              <h4 class="card-title">List of Expenses</h4>
-              <div class="table-responsive pt-3">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                       <th><b>Category</b></th>
-                      <th><b>SubCategory</b></th>
-                      <th><b>Amount</b></th>
-                      <th><b>Date</b></th>
-                      <th><b>Detele</b></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {% for i in expenselist %}
-                    <col>
-                    <td>
-                      <strong>{{i.category_id__cname}}</strong>
-                    </td>
-                    <td>
-                      <strong>{{i.subcategory_id__scname}}</strong>
-                    </td> 
-                    <td> 
-                      <strong>{{i.amount}}</strong>
-                    </td>
-                    <td>
-                      <strong>{{i.expdate}}</strong>
-                    </td>
-                    <td>
-                      <a href="{% url 'expensedelete' i.id %}">
-                      <input type="button" value="Delete" class="btn btn-primary"></a>
-                    </td>
-      
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+    
             </div>
-
-
-              </div>
             </div>
-          </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:partials/_footer.html -->
+    <footer class="footer">
+      <div class="d-sm-flex justify-content-center justify-content-sm-between">
+        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © expense_manager.com 2023</span>
+        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Manage <a href="#" target="_blank">your financial budget</a> with exapanse_manager.com </span>
+      </div>
+    </footer>        
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
     </div>
+
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
-  <footer class="footer">
-    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-      <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © expense_manager.com 2023</span>
-      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Manage <a href="#" target="_blank">your financial budget</a> with exapanse_manager.com </span>
-    </div>
-  </footer>
 
   <!-- base:js -->
   <script src="{% static 'assets/vendors/base/vendor.bundle.base.js' %}"></script>
@@ -376,6 +374,7 @@
   <!-- Custom js for this page-->
   <script src="{% static 'assets/js/dashboard.js' %}"></script>
   <!-- End custom js for this page-->
+
 </body>
 
 </html>

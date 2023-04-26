@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
-from .models import User,UserDetail
+from .models import User
 
 class UserRegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
@@ -17,11 +17,26 @@ class UserRegisterForm(UserCreationForm):
         return user
 
 class AdminRegisterForm(UserCreationForm):
-    # username = forms.CharField(widget=forms.TextInput(attrs={"class" : "input-group input-group-outline mb-3",'placeholder' : "Username"}))
-    # email = forms.CharField(widget=forms.TextInput(attrs={"class" : "input-group input-group-outline mb-3",'placeholder' : "Email"}))
-    # password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class" : "input-group input-group-outline mb-3",'placeholder' : "Set Password"}))
-    # password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class" : "input-group input-group-outline mb-3",'placeholder' : "Confirm Password"}))
-
+    username = forms.CharField(
+        label="Username",
+        strip=False,
+        widget=forms.TextInput,
+    )
+    email = forms.CharField(
+        label="Email",
+        strip=False,
+        widget=forms.EmailInput,
+    )
+    password1 = forms.CharField(
+        label="Password",
+        strip=False,
+        widget=forms.PasswordInput,
+    )
+    password2 = forms.CharField(
+        label="Repeat Password",
+        strip=False,
+        widget=forms.PasswordInput,
+    )
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username','email','password1','password2')
@@ -31,15 +46,21 @@ class AdminRegisterForm(UserCreationForm):
         @transaction.atomic
         def save(self):
             user = super().save(commit=False)
-            user.is_admin = True
+            user.is_user = True
             user.save()
             return User
 
 
 class UserForm(forms.ModelForm):
-    class Meta:
-        model = UserDetail
-        fields = ('user','firstname','lastname','age','professions','budget','picture','email')
+    username = forms.CharField(
+        label="Username",
+        strip=False,
+        widget=forms.TextInput,
+    )
+
+    class Meta():
+        model = User
+        fields = ('username','last_name','first_name','age','professions','budget','picture','email','phone')
 
 
     @transaction.atomic
@@ -50,15 +71,15 @@ class UserForm(forms.ModelForm):
         return user
 
 
-class UserDetailForm(forms.ModelForm):
-    class Meta:
-        model = UserDetail
-        fields = ('user','firstname','lastname','age','professions','budget')
+# class UserDetailForm(forms.ModelForm):
+#     class Meta:
+#         model = UserDetail
+#         fields = ('user','firstname','lastname','age','professions','budget')
 
 
-    @transaction.atomic
-    def save(self):
-        user = super().save(commit=False)
-        user.is_user = True
-        user.save()
-        return user
+#     @transaction.atomic
+#     def save(self):
+#         user = super().save(commit=False)
+#         user.is_user = True
+#         user.save()
+#         return user

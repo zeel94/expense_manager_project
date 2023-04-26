@@ -69,17 +69,20 @@ class Account(models.Model):
 
 paymentMethod = ('cash','Cash'),('cheque','Cheque'),('creditcard','CreditCard')
 status = ('cleared','Cleared'),('uncleared','UnCleared'),('void','Void')
+transaction=(('expense','expense'),('income','income'))
 class Expense(models.Model):
     amount = models.IntegerField()
     expdate = models.DateField(auto_now_add=True)
     exptime = models.TimeField(auto_now_add=True,null=True)
-    payee = models.ForeignKey(Payee,on_delete=models.CASCADE)
+    payee = models.ForeignKey(Payee,on_delete=models.CASCADE,null=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     subcategory = models.ForeignKey(SubCategory,on_delete=models.CASCADE)
     paymentMethod = models.CharField(choices=paymentMethod,max_length=50) 
     status = models.CharField(choices=status,max_length=50)
     description = models.CharField(max_length=100)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    transactionType=models.CharField(choices=transaction, max_length=50,null=True)
+
     class Meta:
         db_table = 'expense'
     def __str__(self):

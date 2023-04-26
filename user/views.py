@@ -1,11 +1,12 @@
-from django.shortcuts import render
-from django.views.generic.edit import CreateView
+from django.shortcuts import render,redirect
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView,UpdateView
 from .models import *
-from .forms import AdminRegisterForm,UserRegisterForm,UserForm,UserDetailForm
-from django.contrib.auth import login
+from .forms import AdminRegisterForm,UserRegisterForm,UserForm
+from django.contrib.auth import login,logout
 from django.contrib.auth.views import LoginView,LogoutView
-from django.views.generic import ListView,DetailView
-from expense.models import Expense
+from django.views.generic import ListView,DetailView,TemplateView
+from expense.models import Expense, Category
 
 class UserRegisterView(CreateView):
     model = User
@@ -31,47 +32,77 @@ class UserLoginView(LoginView):
         
         
 class UserLogoutView(LogoutView):
-    # template_name = 'user/login.html'
-    next_page=None
-    http_method_names = ["get", "head", "post", "options"]
-
-
-class userDashboardView(ListView):            
+    template_name = 'user/logout.html'
     
+    def dispatch(self, request, *args, **kwargs):
+         logout(request)
+         return redirect(reverse_lazy('login')) 
+
+class userDashboardView(ListView):
+    model = Expense
+    context_object_name = 'category'
+
     def get(self, request, *args, **kwargs):
+        user = request.user
+        expenselist1 = Expense.objects.filter(user=user).values()
+        expenselist = Expense.objects.filter(user=user).values('id','amount','category_id__cname','subcategory_id__scname','expdate')
+        # print(expenselist)
+
         expense = Expense.objects.all().values()
+        expense1 = Expense.objects.all().values('amount')
+        expense2 = Expense.objects.filter(user_id=request.user.id).values('amount')
+        u = User.objects.all().values()
+        # id = request.GET.get('id')
+        budget = User.objects.filter(id=user.id).values('budget')
+        print('.....................................',budget)
+        userbudget = 0
+
+        for b in budget:
+            userbudget = userbudget + b.get('budget')
+            print('........userbudget',userbudget)
+
+        total = 0
+        income= 0
+        for i in expense2:
+             total = total+i.get('amount')
+             income = userbudget - total
+             print('///////////income',income)
+
+        expenselist = []  # Declare expenselist as an empty list
+        for e in Expense.objects.filter(user=user).values('id','amount','category_id__cname','subcategory_id__scname','expdate'):
+            expenselist.append(e)
         
+        # search_input = self.request.GET.get('search-area') or ''
+        # if search_input:
+        #     expense = Expense.objects.filter(category__startswith=search_input).values()
+        # else:
+        #     expense = Expense.objects.all().values()
+
         return render(request, 'user/dashboard.html',{
-            'expenses':expense,
+            'expenses': expense,
+            'total': total,
+            'income' : income,
+            'budget': userbudget,
+            'expenselist': expenselist,
         })
 
     template_name = 'user/dashboard.html'
 
-
-class UserCreateView(CreateView):
-    form_class = UserForm
-    model = UserDetail
+class UserUpdateView(UpdateView):
+    model = User
     template_name = 'user/user.html'
     success_url = 'user/userdetail.html'
 
-class UserDetailView(ListView):
-    form_class = UserDetailForm
-    model = UserDetail
+class UserDetailView(DetailView):
+    model = User
     template_name = 'user/userdetail.html'
     context_object_name = 'userdetail'
 
-def form_valid(self, form):
-        # create a Payee object for the logged-in user if it doesn't exist
-        payee, created = Payee.objects.get_or_create(user=self.request.user, defaults={'name': self.request.user.username})
+class UserUpdateView(UpdateView):
+    model= User
+    form_class = UserForm
+    template_name = 'user/userupdate.html'
+    # success_url = '/user/userdetail'
 
-        # set the payee field of the Expense object to the Payee instance
-        form.instance.payee = payee
-        form.instance.save()
-
-        # subject = 'Alert Expense/Income Added'
-        # message = 'We are pleased to inform you that your recent income/expense has been added successfully to your Expense Manager App. Your updated records are now available for you to access and review at any time.'
-        # email_from = settings.EMAIL_HOST_USER
-        # recipient_list = [self.request.user.email]
-        # send_mail(subject, message, email_from, recipient_list)
-        
-        return super().form_valid(form)
+    def get_success_url(self):
+        return reverse_lazy('userdetail', kwargs={'pk':self.object.pk})
