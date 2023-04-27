@@ -4,19 +4,6 @@ from django.db import transaction
 from .models import User
 
 class UserRegisterForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ('username','email','password1','password2')
-
-
-    @transaction.atomic
-    def save(self):
-        user = super().save(commit=False)
-        user.is_user = True
-        user.save()
-        return user
-
-class AdminRegisterForm(UserCreationForm):
     username = forms.CharField(
         label="Username",
         strip=False,
@@ -40,6 +27,21 @@ class AdminRegisterForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username','email','password1','password2')
+
+
+    # @transaction.atomic
+    # def save(self):
+    #     user = super().save(commit=False)
+    #     user.is_user = True
+    #     user.save()
+    #     return user
+
+class AdminRegisterForm(UserCreationForm):
+    
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ('username','email','password1','password2')
+        # widgets={'username':forms.TextInput(attrs={'class':'input-group input-group-outline mb-3','type':'text','placeholder':'Username'})}
 
 
 

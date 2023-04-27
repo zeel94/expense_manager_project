@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
-  <script>
+  <!-- <script>
     function searchFromProject(){
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
@@ -43,7 +43,7 @@
       }
     }
 
-  </script>
+  </script> -->
 </head>
 <body>
   <div class="container-scroller">
@@ -66,22 +66,28 @@
                   <i class="icon-search"></i>
                 </span>
               </div>
-              <!-- <form method="get" id="myForm">
-                <input style="border: none;" type="text" name="search-area" value="{{search_input}}" placeholder="Search Category">
+              <form method="get" id="myForm">
+                <input style="border: none;" type="text" name="search-area" value="{{search_input}}" placeholder="Search Category" class="form-control">
               </form>
+              
               <script>
                 const form = document.getElementById('myForm');
-                const input = form.querySelector('input[name="search"]');
-              
+                const input = form.querySelector('input[name="search-area"]');
+                            
                 input.addEventListener('keydown', (event) => {
                   if (event.key === 'Enter') {
                     event.preventDefault();
                     form.submit();
                   }
                 });
-              </script> -->
-
-              <input type="text" class="form-control" placeholder="Search Expense.." onkeyup="searchFromProject()" aria-label="search" aria-describedby="search" id ="myInput">
+              </script>
+              
+              {% for expense in exp %}
+                {{expense.category_id__cname}}
+              {% endfor %}
+              
+              
+              <!-- <input type="text" class="form-control" placeholder="Search Expense.." onkeyup="searchFromProject()" aria-label="search" aria-describedby="search" id ="myTable"> -->
             </div>
           </li>
         </ul>

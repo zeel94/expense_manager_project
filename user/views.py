@@ -44,21 +44,22 @@ class userDashboardView(ListView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        expenselist1 = Expense.objects.filter(user=user).values()
+        # expenselist1 = Expense.objects.filter(user=user).values()
         expenselist = Expense.objects.filter(user=user).values('id','amount','category_id__cname','subcategory_id__scname','expdate')
         # print(expenselist)
 
         expense = Expense.objects.all().values()
-        expense1 = Expense.objects.all().values('amount')
+        # expense1 = Expense.objects.all().values('amount')
         expense2 = Expense.objects.filter(user_id=request.user.id).values('amount')
         u = User.objects.all().values()
         # id = request.GET.get('id')
         budget = User.objects.filter(id=user.id).values('budget')
         print('.....................................',budget)
         userbudget = 0
-
+        
         for b in budget:
-            userbudget = userbudget + b.get('budget')
+            if b.get('budget') is not None:
+                userbudget = userbudget + b.get('budget')
             print('........userbudget',userbudget)
 
         total = 0
@@ -72,11 +73,12 @@ class userDashboardView(ListView):
         for e in Expense.objects.filter(user=user).values('id','amount','category_id__cname','subcategory_id__scname','expdate'):
             expenselist.append(e)
         
-        # search_input = self.request.GET.get('search-area') or ''
-        # if search_input:
-        #     expense = Expense.objects.filter(category__startswith=search_input).values()
-        # else:
-        #     expense = Expense.objects.all().values()
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            exp = Expense.objects.filter(category__cname__icontains=search_input).values()
+            print('...................exp',exp)
+            print('Search input:', search_input)
+        
 
         return render(request, 'user/dashboard.html',{
             'expenses': expense,
@@ -84,6 +86,7 @@ class userDashboardView(ListView):
             'income' : income,
             'budget': userbudget,
             'expenselist': expenselist,
+            # 'exp':exp
         })
 
     template_name = 'user/dashboard.html'

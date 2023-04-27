@@ -79,6 +79,11 @@ class ExpenseListView(ListView):
             expenselist = expenselist.order_by(sort_by)
         elif direction == 'desc':
             expenselist = expenselist.order_by(f'-{sort_by}')
+        search_input = self.request.GET.get('search-area') or ''
+        if search_input:
+            expense = Expense.objects.filter(category__cname__icontains=search_input).values()
+            print('...................exp',expense)
+            print('Search input:', search_input)
         return render(request, 'expense/expenselist.html', {'expenselist': expenselist})
 
     def get_queryset(self):
@@ -108,7 +113,7 @@ class ExpenseDetailView(DetailView):
 
     labels = []
     data = []
-    expense = Expense.objects.all().values_list('category',flat=True)
+    expense = Expense.objects.all().values_list('category__cname',flat=True)
     amount = Expense.objects.all().values_list('amount',flat=True)
     for i in expense:
         labels.append(i)
@@ -116,7 +121,9 @@ class ExpenseDetailView(DetailView):
         data.append(i) 
 
     def get(self, request, *args, **kwargs):
-        exp = Expense.objects.filter(id=self.kwargs['pk'])
+        user = request.user
+        exp = Expense.objects.filter(id=self.kwargs['pk'],user_id=user.id)
+
         return render(request, self.template_name, {'expensedetail': self.get_object(),'exp':exp,'labels':self.labels,'data':self.data})
 
 def home(request):
