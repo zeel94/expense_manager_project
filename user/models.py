@@ -7,8 +7,8 @@ class User(AbstractUser):
     is_user = models.BooleanField(default=True,null=True)
     is_admin = models.BooleanField(default=True,null=True)
     professions = models.CharField(max_length=50,null=True)
-    picture = models.ImageField(upload_to='image',null=True,blank=True,default='media/avtar7.png')
-    phone = models.IntegerField(max_length=11,null=True)
+    picture = models.ImageField(upload_to='image/',null=True,blank=True,default='media/avtar7.png')
+    phone = models.CharField(max_length=10,null=True)
     age = models.IntegerField(null=True)
     budget = models.IntegerField(default=0, null=True)
 
