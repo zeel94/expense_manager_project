@@ -1,169 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script> {% endcomment %}
+{% extends 'navbar.html' %}
 
-    <title>Document</title>
-  </head>
-  <body>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-      }
-      
-      h1 {
-        text-align: center;
-        margin-top: 50px;
-      }
-      
-      p {
-        margin-top: 30px;
-        font-size: 18px;
-        line-height: 1.5;
-      }
-      
-      .image-container {
-        display: flex;
-        justify-content: center;
-        margin-top: 50px;
-      }
-      
-      img {
-        width: 400px;
-        height: auto;
-        border-radius: 10px;
-      }
-      
-      .cta {
-        display: block;
-        text-align: center;
-        margin-top: 50px;
-        font-size: 20px;
-        color: white;
-        background-color: blue;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-decoration: none;
-      }
-      
-      .cta:hover {
-        background-color: darkblue;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>The Importance of a Personal Expense Manager</h1>
-    
-    <p>Managing your personal finances can be a daunting task, especially if you have multiple sources of income, multiple bills to pay, and various expenses to keep track of. This is where a personal expense manager comes in handy.</p>
-    
-    <div class="image-container">
-      <img src="https://play-lh.googleusercontent.com/suZk_SQpTlqm0OqfDfgv3NQuhTDXsUy1qSasQw8n7rkRiXe0n39Z1LBzzyTEooFRQiYZ">
+{% block content %}
+
+
+{% load static %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12 mb-4 mb-xl-0">
+        <h4 class="font-weight-bold text-dark">Hi, welcome {{user.username}}!</h4>
+        <!-- <h4 class="font-weight-normal mb-2 text-muted"><b>List</b></h4> -->
+      </div>
     </div>
-    
-    <p>A personal expense manager is a tool that helps you keep track of your income, expenses, and bills in one place. It allows you to create a budget, set financial goals, and track your progress over time.</p>
-    
-    <p>By using a personal expense manager, you can:</p>
-    
-    <ul>
-      <li>See where your money is going and identify areas where you can cut back</li>
-      <li>Stay on top of your bills and avoid late fees</li>
-      <li>Make informed financial decisions based on your spending habits</li>
-      <li>Set and achieve financial goals, such as saving for a down payment on a house or paying off debt</li>
-      <li>Reduce stress and anxiety related to managing your finances</li>
-    </ul>
-    
-    <p>Overall, a personal expense manager is an essential tool for anyone who wants to take control of their finances and achieve financial stability. If you don't have one already, consider researching different options and finding one that works for you.</p>
-    
-    <a href="{% url 'expensecreate' %}" class="cta">Get Started Today</a>
-  {% comment %} </body>
-  </html> {% endcomment %}
+    <div class="card-body">
+      <!-- <h4 class="card-title">Horizontal Form</h4>
+      <p class="card-description">
+        Horizontal form layout
+      </p> -->
+      <form class="forms-sample">            
+
+        <div class="col-md-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h4 class="d-flex align-items-center mb-3" style="color: #4B49AC;">
+                  Expense Details
+              </h4>
+              <br>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Amount</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.amount}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Date</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                 <strong style="color: black;">{{expensedetail.expdate}}</strong> 
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Category</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.category}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">SubCategory</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <strong style="color: black;">{{expensedetail.subcategory}}</strong>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">PaymentMethod</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.paymentMethod}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Description</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <strong style="color: black;">{{expensedetail.description}}</strong>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-info " href="{% url 'expenseupdate' expensedetail.id %}">Edit</a>
+                    </div>
+                  </div>
   
-    
-  
-    <div id="container" style="width: 75%;">
-      <canvas id="doughnut-chart"></canvas>
+                </div>
+            </div>
+          </div>
+      </div>      
+    </form>
     </div>
-  
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <div>
+    <canvas id="myChart" ></canvas>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <script>
-  
-      var config = {
-        type: 'pie',
-        data: {
-          datasets: [{
-            data: {{ data|safe }},
-            backgroundColor: [
-              {% comment %} '#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3' {% endcomment %}
-              'rgba(258, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)', 
-              'rgba(54, 162, 290, 0.2)',
-              'rgba(153, 102, 290, 0.2)',
-              'rgba(201, 203, 297, 0.2)' 
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            {% comment %} borderWidth: 1 {% endcomment %}
-            label: 'Expense'
-            
-          }],
-          labels: {{ labels|safe }}
-        },
-        options: {
-          responsive: true
-        }
+      const chart_labels = {{ chart_labels|safe }};
+      const chart_data = {{ chart_data|safe }};
+    
+      const data = {
+        labels: chart_labels.labels,
+        datasets: [{
+          label: 'Expenses',
+          data: chart_data.data,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgb(54, 162, 235)',
+          borderWidth: 1
+        }]
       };
-  
-      window.onload = function() {
-        var ctx = document.getElementById('doughnut-chart').getContext('2d');
-        window.myPie = new Chart(ctx, config);
-      };
-  
-    </script>
-
-
-     <canvas id="barchart" width="1000" height="400"></canvas>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      new Chart(document.querySelector('#barChart'), {
+    
+      const config = {
         type: 'bar',
-        data: {
-          labels: labels: {{ labels|safe }}
-          datasets: [{
-            label: 'Expense',
-            data:  data: {{ data|safe }},
-            backgroundColor: [
-              'rgba(258, 99, 132, 0.2)',
-              'rgba(255, 159, 64, 0.2)',
-              'rgba(255, 205, 86, 0.2)',
-              'rgba(75, 192, 192, 0.2)',
-              'rgba(54, 162, 235, 0.2)',
-              'rgba(153, 102, 255, 0.2)',
-              'rgba(201, 203, 207, 0.2)'
-            ],
-            borderColor: [
-              'rgb(255, 99, 132)',
-              'rgb(255, 159, 64)',
-              'rgb(255, 205, 86)',
-              'rgb(75, 192, 192)',
-              'rgb(54, 162, 235)',
-              'rgb(153, 102, 255)',
-              'rgb(201, 203, 207)'
-            ],
-            borderWidth: 1
-          }]
-        },
+        data: data,
         options: {
           scales: {
             y: {
@@ -171,15 +121,43 @@
             }
           }
         }
-      });
-    });
-  </script>  
-  <!-- End Bar CHart -->
-
-            {% comment %} </div> {% endcomment %}
-          {% comment %} </div> {% endcomment %}
-        {% comment %} </div> {% endcomment %}
-
-     
-  </body>
-</html>
+      };
+    
+      var myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+    </script>              
+    
+    <div class="row">
+              
+            </div>
+        </div>
+            
+          </div>
+        </div>
+        <div class="col-xl-4 grid-margin stretch-card">
+          
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-9 grid-margin-lg-0 grid-margin stretch-card">
+        </div>
+      <div class="col-xl-3 grid-margin-lg-0 grid-margin stretch-card">
+        
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © expense_manager.com 2023</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Manage <a href="#">your financial budget</a> with exapanse_manager.com </span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+{% endblock %}

@@ -11,9 +11,11 @@ urlpatterns = [
     path('create/',ExpenseCreateView.as_view(),name='expensecreate'),
     path('list/',ExpenseListView.as_view(),name='expenselist'),
     # path('chart/',ChartCreateView.as_view(),name='chart'),
-    # path('update/<int:pk>',ExpenseUpdateView.as_view(),name='expenseupdate'),
+    path('update/<int:pk>',ExpenseUpdateView.as_view(),name='expenseupdate'),
     path('delete/<int:pk>',ExpenseDeleteView.as_view(),name='expensedelete'),
     path('detail/<int:pk>',ExpenseDetailView.as_view(),name='expensedetail'),
+    path('data/',DataListView.as_view(),name='datalist'),
+
     # path('profile/',profile,name="profile"),
     
 

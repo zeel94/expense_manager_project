@@ -23,6 +23,8 @@ class UserRegisterForm(UserCreationForm):
         label="Repeat Password",
         strip=False,
         widget=forms.PasswordInput,
+        help_text='Password should be 8 character long'
+
     )
     class Meta(UserCreationForm.Meta):
         model = User
@@ -36,21 +38,6 @@ class UserRegisterForm(UserCreationForm):
     #     user.save()
     #     return user
 
-class AdminRegisterForm(UserCreationForm):
-    
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = ('username','email','password1','password2')
-        # widgets={'username':forms.TextInput(attrs={'class':'input-group input-group-outline mb-3','type':'text','placeholder':'Username'})}
-
-
-
-        @transaction.atomic
-        def save(self):
-            user = super().save(commit=False)
-            user.is_user = True
-            user.save()
-            return User
 
 
 class UserForm(forms.ModelForm):
@@ -62,7 +49,7 @@ class UserForm(forms.ModelForm):
 
     class Meta():
         model = User
-        fields = ('username','last_name','first_name','age','professions','budget','picture','email','phone')
+        fields = ('username','last_name','first_name','age','professions','budget','picture','email','address')
 
 
     @transaction.atomic

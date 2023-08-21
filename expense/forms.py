@@ -5,9 +5,10 @@ from expense.models import Expense
 class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
-        fields = ('amount','category','subcategory','paymentMethod','status','description','user')
+        fields = ('amount','category','subcategory','paymentMethod','description','user')
         widgets = {
             'user': forms.HiddenInput(),
+            'subcategory': forms.TextInput(attrs={'placeholder': 'For example: Category=Fuel SubCategory=Petrol'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -15,6 +16,7 @@ class ExpenseForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         if user:
             self.fields['user'].initial = user
+        
 
 class ChartForm(forms.ModelForm):
     class Meta:

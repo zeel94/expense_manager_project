@@ -8,13 +8,15 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=True,null=True)
     professions = models.CharField(max_length=50,null=True)
     picture = models.ImageField(upload_to='image/',null=True,blank=True,default='media/avtar7.png')
-    phone = models.CharField(max_length=10,null=True)
+    address = models.CharField(max_length=100,null=True)
     age = models.IntegerField(null=True)
     budget = models.IntegerField(default=0, null=True)
 
 
     class Meta:
         db_table = 'user'
+    def __str__(self):
+        return f"{self.username}"
 
 # class UserDetail(models.Model):
 #     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)

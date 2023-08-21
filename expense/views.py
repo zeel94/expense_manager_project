@@ -11,6 +11,8 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from user.models import *
+from django.db.models import Sum
+
 
 
 
@@ -18,7 +20,7 @@ from user.models import *
 # Create your views here.    
 
 
-@method_decorator(login_required(login_url='http://127.0.0.1:8000/user/userform/'),name='dispatch')
+# @method_decorator(login_required(login_url='http://127.0.0.1:8000/user/userform/'),name='dispatch')
 class ExpenseCreateView(LoginRequiredMixin, CreateView):
     form_class =ExpenseForm
     model = Expense
@@ -44,20 +46,6 @@ class ExpenseCreateView(LoginRequiredMixin, CreateView):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
-    # def get(self, request, *args, **kwargs):
-    #     user = UserDetail.objects.all().values()
-    #     user1 = UserDetail.objects.all().values('budget')
-    #     user2 = UserDetail.objects.filter(user_id=request.user.id).values('budget')
-    #     expense = Expense.objects.all().values('amount') 
-    #     print("user1=======",user2)
-
-    #     for a,b in expense,user2:
-    #          print(a,b)
-    #          userbudget = b.get('budget') - a.get('amount')
-    #     print("user budget...",userbudget)  
-    #     return HttpResponse("Created...")
-
-
 
 @method_decorator(login_required(login_url='/user/login'),name='dispatch')
 
@@ -68,23 +56,18 @@ class ExpenseListView(ListView):
 
     def get(self, request, *args, **kwargs):
         user = request.user
-        expenselist1 = Expense.objects.filter(user=user).values()
-        expenselist = Expense.objects.filter(user=user).order_by('expdate').values('id', 'amount', 'category_id__cname', 'subcategory_id__scname', 'expdate')
-        # expense = Expense.objects.filter(user=user).order_by('expdate').values()
-        sort_by = self.request.GET.get('sort_by', 'expdate')
+        expenselist = Expense.objects.filter(user=user).order_by('expdate').values('id', 'amount', 'category_id__cname', 'subcategory', 'expdate')
+        sort_by = self.request.GET.get('sort_by', 'exptime')
         direction = self.request.GET.get('direction', 'asc')
-        print(".....", sort_by)
-        print(".....", direction)
+        expense = []
         if direction == 'asc':
             expenselist = expenselist.order_by(sort_by)
-        elif direction == 'desc':
+        else:
             expenselist = expenselist.order_by(f'-{sort_by}')
         search_input = self.request.GET.get('search-area') or ''
         if search_input:
-            expense = Expense.objects.filter(category__cname__icontains=search_input).values()
-            print('...................exp',expense)
-            print('Search input:', search_input)
-        return render(request, 'expense/expenselist.html', {'expenselist': expenselist})
+            expenselist = expenselist.filter(category__cname__icontains=search_input)
+        return render(request, 'expense/expenselist.html', {'expenselist': expenselist, 'expense': expense})
 
     def get_queryset(self):
         return super().get_queryset()
@@ -100,32 +83,44 @@ class ExpenseDeleteView(DeleteView):
 
 
 
-# class ExpenseUpdateView(UpdateView):
-#     model= Expense
-#     template_name = 'expense/expenseupdate.html'
-#     fields = '__all__'
-#     success_url = '/expense/list'
+class ExpenseUpdateView(UpdateView):
+    model= Expense
+    template_name = 'expense/expenseupdate.html'
+    fields = ['amount','category','subcategory','paymentMethod','description']
+    success_url = '/expense/list'
 
 class ExpenseDetailView(DetailView):
     model = Expense
     template_name = 'expense/expensedetail.html'
     context_object_name = 'expensedetail'
 
-    labels = []
-    data = []
-    expense = Expense.objects.all().values_list('category__cname',flat=True)
-    amount = Expense.objects.all().values_list('amount',flat=True)
-    for i in expense:
-        labels.append(i)
-    for i in amount:
-        data.append(i) 
-
     def get(self, request, *args, **kwargs):
-        user = request.user
-        exp = Expense.objects.filter(id=self.kwargs['pk'],user_id=user.id)
+        # Filter expenses by current user
+        expenses = Expense.objects.filter(user=request.user)
 
-        return render(request, self.template_name, {'expensedetail': self.get_object(),'exp':exp,'labels':self.labels,'data':self.data})
+        # Aggregate expenses by category and sum their amounts
+        expense_totals = expenses.values('category__cname').annotate(total=Sum('amount'))
 
+        # Initialize labels and data lists
+        labels = []
+        data = []
+
+        # Loop through expenses and add category names and amounts to lists
+        for expense in expense_totals:
+            labels.append(expense['category__cname'])
+            data.append(expense['total'])
+
+        # Pass labels and data to chart configuration
+        chart_labels = {'labels': labels}
+        chart_data = {'data': data}
+
+        context = {'expensedetail': self.get_object(),
+                   'expenses': expenses,
+                   'chart_labels': chart_labels,
+                   'chart_data': chart_data}
+
+        return render(request, self.template_name, context)
+    
 def home(request):
     return render(request,'home.html')
 
@@ -168,3 +163,8 @@ def subscribe(request):
         messages.info(request,'Your message has been send successfully .')
 
     return redirect('http://127.0.0.1:8000/')
+
+class DataListView(ListView):
+    model = Expense
+    template_name = 'expense/datadetail.html'
+    context_object_name = 'datalist'

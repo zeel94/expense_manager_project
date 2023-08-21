@@ -1,0 +1,223 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+
+
+{% load static %}
+<div class="main-panel">
+  <div class="content-wrapper">
+    <div class="row">
+      <div class="col-sm-12 mb-4 mb-xl-0">
+        <h4 class="font-weight-bold text-dark">Hi, welcome {{user.username}}!</h4>
+        <!-- <h4 class="font-weight-normal mb-2 text-muted"><b>List</b></h4> -->
+      </div>
+    </div>
+    <div class="card-body">
+      <!-- <h4 class="card-title">Horizontal Form</h4>
+      <p class="card-description">
+        Horizontal form layout
+      </p> -->
+      <form class="forms-sample">            
+
+        <div class="col-md-8">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h4 class="d-flex align-items-center mb-3" style="color: #4B49AC;">
+                  Data according to Category and SubCategory
+              </h4>
+              <br>
+              <!-- <div class="row">
+                <div class="col-sm-3"> -->
+                  
+                  <h5 >The categories of expenses can vary depending on the specific context or classification system used. However, here are some common categories of expenses:
+                    <br> <br>      
+                    Transportation: Vehicle expenses (fuel, maintenance, insurance), public transportation fares, taxi or ride-sharing services.
+                    <br><br>
+                    Food: Groceries, dining out, delivery services.
+                    <br><br>
+                    Entertainment: Movie tickets, concerts, sporting events, hobbies, subscriptions (streaming services, magazines).
+                    <br><br>
+                    Travel: Airfare, accommodation, transportation (car rentals, taxis), meals.
+                    <br><br>
+                    Education: Tuition fees, books, supplies.
+                    <br><br>
+                    Clothing: Apparel, shoes, accessories.
+                    <br><br>
+                    Utilities: Internet, cable/satellite TV, phone bills.
+                    <br><br>
+                    Insurance: Life insurance, home insurance, car insurance.
+                    <br><br>
+                    Taxes: Income taxes, property taxes.
+                    <br><br>
+                    Gifts and Donations: Presents for others, charitable contributions.
+                    <br><br>
+                    Childcare: Daycare expenses, babysitting services.
+                    <br><br>
+                    Pet Care: Veterinary bills, pet food, grooming.
+                    <br><br>
+                    Subscriptions: Newspaper/magazine subscriptions, online services.
+                    <br><br>
+                    Home Furnishings: Furniture, appliances, home decor.
+                    <br><br>
+                    Repairs and Maintenance: Vehicle repairs, appliance repairs, home repairs.
+                    <br><br>
+                    Business Expenses: Office supplies, advertising, business travel.
+                    <br><br>
+                    Home Improvement: Renovations, upgrades, remodeling.
+                    <br><br>
+                    Entertainment Subscriptions: Streaming services (Netflix, Spotify, etc.), gaming subscriptions.
+                    <br><br>
+                    Events and Celebrations: Parties, weddings, special occasions.
+                    <br><br>
+                    Electronics and Gadgets: Computers, smartphones, tablets, electronic accessories.
+                    <br><br>
+                    Fuel: Petrol,Deisel,Gas.
+                    <br><br>
+                    Others: Other expenses that do not fit into specific categories.
+                    
+                </div>
+                <!-- <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.amount}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Date</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                 <strong style="color: black;">{{expensedetail.expdate}}</strong> 
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Category</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.category}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">SubCategory</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <strong style="color: black;">{{expensedetail.subcategory}}</strong>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">PaymentMethod</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.paymentMethod}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Description</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <strong style="color: black;">{{expensedetail.description}}</strong>
+                  </div>
+  
+                </div>
+                <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Amount</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.amount}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Date</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                 <strong style="color: black;">{{expensedetail.expdate}}</strong> 
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">Category</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.category}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">SubCategory</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <strong style="color: black;">{{expensedetail.subcategory}}</strong>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <h6 class="mb-0">PaymentMethod</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                  <strong style="color: black;">{{expensedetail.paymentMethod}}</strong>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Description</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <strong style="color: black;">{{expensedetail.description}}</strong>
+                  </div> -->
+                  
+  
+                </div>
+                
+            </div>
+          </div>
+      </div>      
+    </form>
+    </div>
+                
+    
+    <div class="row">
+              
+            </div>
+        </div>
+            
+          </div>
+        </div>
+        <div class="col-xl-4 grid-margin stretch-card">
+          
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-9 grid-margin-lg-0 grid-margin stretch-card">
+        </div>
+      <div class="col-xl-3 grid-margin-lg-0 grid-margin stretch-card">
+        
+      </div>
+    </div>
+  </div>
+  <!-- content-wrapper ends -->
+  <!-- partial:partials/_footer.html -->
+  <footer class="footer">
+    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+      <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © expense_manager.com 2023</span>
+      <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> Manage <a href="#">your financial budget</a> with exapanse_manager.com </span>
+    </div>
+  </footer>
+  <!-- partial -->
+</div>
+<!-- main-panel ends -->
+</div>
+{% endblock %}
